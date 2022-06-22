@@ -44,14 +44,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <nav className="App__header__nav">
-            {pageInfo.map(page => {
+            {pageInfo.map((page,id) => {
               switch (page.pageName) {
                 case "CounterClass":
-                  return <a onClick={() => hanldeChangePage(page)} >{page.pageName} <CounterNumber /></a>
+                  return <a key={id} onClick={() => hanldeChangePage(page)} >{page.pageName} <CounterNumber /></a>
                 case "BuyStockClass":
-                  return <a onClick={() => hanldeChangePage(page)} >{page.pageName} <BuyStockNumber /></a>
+                  return <a key={id} onClick={() => hanldeChangePage(page)} >{page.pageName} <BuyStockNumber /></a>
                 default:
-                  return <a onClick={() => hanldeChangePage(page)} >{page.pageName}</a>
+                  return <a key={id} onClick={() => hanldeChangePage(page)} >{page.pageName}</a>
               }
             })}
         </nav>
