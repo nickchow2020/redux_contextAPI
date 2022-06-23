@@ -1,18 +1,25 @@
+import {HANDLE_ADD} from "./actionType"
+import {HANDLE_SUB} from "./actionType"
+import {HANDLE_OPTION} from "./actionType"
+
+
+
 const INIT_STATE = {
   initCounter: 0,
   incrementNum: 1,
   decrementNum: 1
 }
 
+
 function counterReducer(state=INIT_STATE,action){
   switch(action.type){
-    case "HANDLE_ADD" :
+    case HANDLE_ADD :
       return {...state,initCounter: state.initCounter + state.incrementNum}
 
-    case "HANDLE_SUB" :
+    case HANDLE_SUB :
       return {...state,initCounter: state.initCounter - state.decrementNum}
 
-    case "HANDLE_OPTION":
+    case HANDLE_OPTION:
       return {...state,...action.newOption}
 
     default:

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector,useDispatch} from "react-redux"
-
+import { increment,decrement } from '../../redux/action';
 const CounterFn = () => {
 
   const {initCounter} = useSelector(data => data.counter)
@@ -19,11 +19,11 @@ const CounterFn = () => {
   }
 
   const handleAdd = ()=> {
-    dispatch({type:"HANDLE_ADD"})
+    dispatch(increment())
   }
 
   const handleSub = ()=>{
-    dispatch({type:"HANDLE_SUB"})
+    dispatch(decrement())
   }
 
     return (

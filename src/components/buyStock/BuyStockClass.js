@@ -1,21 +1,23 @@
 import React from 'react';
-import { withCounter } from "../../hoc/withCounter"
-import { withLoading } from '../../hoc/withLoading';
-import { getInitStockInfo } from '../../apis/stock.api'
-
+// import { withStockContext } from "../../context/stockContext";
+import {connect} from "react-redux"
+import {buyStock,sellStock,startLoading,endLoading,setState} from "../../redux/action";
+import {getInitStockInfo} from "../../apis/my_stock.api"
 class BuyStockClass extends React.Component {
+
   render(){
+    console.log("is me",this.props)
     return (
       <section>
         <h1>How many stock you want to buy</h1>
         {
           this.props.isLoading 
-          ? this.props.showLoading("spinner")
-          :<><button onClick={this.props.handleAdd}>
+          ? <h1>spinner...</h1>
+          :<><button onClick={this.props.buyStock}>
               +
           </button>
-          <span style={{ color: 'blue',padding: 20 }}>{this.props.counter}</span>
-          <button onClick={this.props.handleSub}>
+          <span style={{ color: 'blue',padding: 20 }}>{this.props.stockAmount}</span>
+          <button onClick={this.props.sellStock}>
               -
           </button>
           <span style={{ color: 'blue',padding: 20 }}>BuyStockClass</span></>
@@ -26,16 +28,36 @@ class BuyStockClass extends React.Component {
     }
 
     componentDidMount(){
-      this.props.startLoading() 
-      getInitStockInfo().then(option => {
-        this.props.handleSetOption(option);
-        this.props.endLoading()
-      })
+      if(this.props.stockAmount === 0){
+        this.props.startLoading()
+        getInitStockInfo()
+        .then(option => {
+          this.props.setState(option)
+          this.props.endLoading()
+        })
+      }
     }
 }
 
 
-const BuyStockClassContainer = withCounter(withLoading(BuyStockClass));
+const mapStateToProps = state => ({
+  stockAmount: state.stock.stockAmount,
+  isLoading: state.stock.isLoading
+});
 
 
-export default BuyStockClassContainer;
+const mapDispatchToProps = dispatch => {
+  return {
+      buyStock: ()=> dispatch(buyStock()),
+      sellStock: ()=> dispatch(sellStock()),
+      startLoading :()=> dispatch(startLoading()),
+      endLoading :()=> dispatch(endLoading()),
+      setState :(option)=> dispatch(setState(option)),
+  }
+}
+
+
+// const BuyStockClassContainer = withStockContext(BuyStockClass);
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(BuyStockClass);

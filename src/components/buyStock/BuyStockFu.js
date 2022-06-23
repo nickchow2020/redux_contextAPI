@@ -1,39 +1,34 @@
-import React, {useEffect} from 'react'
-import { useCounterContext } from '../../context/counterContext';
-import { useLoading } from '../../hooks/useLoading'
-import { getInitStockInfo } from '../../apis/stock.api'
-
+import React,{useEffect} from 'react';
+import {useSelector,useDispatch} from "react-redux";
+import {buyStock,sellStock,startLoading,endLoading,setState} from "../../redux/action";
+import {getInitStockInfo} from "../../apis/my_stock.api";
 
 const BuyStockFn = () => {
-  const [isLoading, startLoading, endLoading, showLoading] = useLoading(false)
+  const {stockAmount,isLoading} = useSelector(data => data.stock)
+  const dispatch = useDispatch()
 
-  const [
-    stockAmount,
-    buyStock,
-    sellStock,
-    setStockOption
-] = useCounterContext()
-
-  useEffect(() => {
-    startLoading()
-    getInitStockInfo().then(option => {
-        setStockOption(option);
-        endLoading()
-    })
-}, [])
+  useEffect(()=>{
+    if(stockAmount === 0){
+      dispatch(startLoading())
+      getInitStockInfo()
+      .then(option => {
+        dispatch(setState(option))
+        dispatch(endLoading())
+      })
+    }
+  },[])
 
   return(
     <section>
       <h1>How many stock you want to buy</h1>
       {
         isLoading 
-        ? showLoading('normal') 
-        :<><button onClick={buyStock}>+</button>
+        ? <h1>loading...</h1>
+        :<><button onClick={()=> dispatch(buyStock())}>+</button>
       <span style={{ color: 'blue',padding: 20 }}>{stockAmount}</span>
-      <button onClick={sellStock}>-</button>
+      <button onClick={()=> dispatch(sellStock())}>-</button>
       <span style={{ color: 'blue',padding: 20 }}>BuyStockFun</span></>
       }
-
     </section>
   )
 }

@@ -1,12 +1,15 @@
 import React from 'react';
-import { withCounterContext } from '../../context/counterContext';
+import {connect} from "react-redux"
 
 class StockNumber extends React.Component {
     render() {
         console.log("CounterNumber props", this.props)
-        return <span>{this.props.counter}</span>
+        return <span>{this.props.stockAmount}</span>
     }
 }
 
-const StockNumberContainer = withCounterContext(StockNumber)
-export default StockNumberContainer
+const mapStateToProps = state => ({
+    stockAmount: state.stock.stockAmount,
+});
+
+export default connect(mapStateToProps)(StockNumber)

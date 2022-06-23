@@ -30,7 +30,6 @@ const mapDispatchToProps = dispatch => {
         addCount: ()=> dispatch(increment()),
         subCount: ()=> dispatch(decrement())
     }
-    
 }
 
 

@@ -5,7 +5,6 @@ import BuyStockFn from './components/buyStock/BuyStockFu';
 import BuyStockClass from './components/buyStock/BuyStockClass';
 import CounterNumber from './components/counter/CounterNumber';
 import BuyStockNumber from "./components/buyStock/BuyStockNumber";
-
 import "./App.css"
 
 const pageInfo = [
@@ -55,10 +54,9 @@ function App() {
               }
             })}
         </nav>
-
-        {
-        renderCurrentPage()
-        }
+          {
+          renderCurrentPage()
+          }
       </header>
 
     </div>

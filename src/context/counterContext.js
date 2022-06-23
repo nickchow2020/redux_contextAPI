@@ -12,8 +12,7 @@ export const withCounterContext = (WrappedComponent) => {
             return <WrappedComponent {...this.props} counter={counter} handleAdd={handleAdd} handleSub={handleSub} handleSetOption={handleSetOption} />
         }
     }
-};
-
+}
 export const useCounterContext = () => {
     return useContext(CounterContext);
 };

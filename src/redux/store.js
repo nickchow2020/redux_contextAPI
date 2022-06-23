@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counter from "./counter";
+import counter from "./counterReducer";
+import stock from "./stockReducer"
 
 export const store = configureStore({
   reducer :{
-    counter
+    counter,
+    stock
   }
 })
