@@ -1,22 +1,15 @@
 import React,{useEffect} from 'react';
 import {useSelector,useDispatch} from "react-redux";
-import {buyStock,sellStock,startLoading,endLoading,setState} from "../../redux/action";
-import {getInitStockInfo} from "../../apis/my_stock.api";
-
+import {buyStock,sellStock} from "../../redux/action";
+import {fetchDataFromAPI} from "../../redux/action";
 const BuyStockFn = () => {
   const {stockAmount,isLoading} = useSelector(data => data.stock)
+
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    if(stockAmount === 0){
-      dispatch(startLoading())
-      getInitStockInfo()
-      .then(option => {
-        dispatch(setState(option))
-        dispatch(endLoading())
-      })
-    }
-  },[])
+    if(stockAmount === 0) dispatch(fetchDataFromAPI())
+  },[dispatch])
 
   return(
     <section>

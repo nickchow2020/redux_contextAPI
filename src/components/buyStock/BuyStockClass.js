@@ -1,12 +1,11 @@
 import React from 'react';
 // import { withStockContext } from "../../context/stockContext";
 import {connect} from "react-redux"
-import {buyStock,sellStock,startLoading,endLoading,setState} from "../../redux/action";
-import {getInitStockInfo} from "../../apis/my_stock.api"
+import {buyStock,sellStock,fetchDataFromAPI} from "../../redux/action";
 class BuyStockClass extends React.Component {
 
   render(){
-    console.log("is me",this.props)
+    console.log("is me !!!",this.props)
     return (
       <section>
         <h1>How many stock you want to buy</h1>
@@ -28,14 +27,7 @@ class BuyStockClass extends React.Component {
     }
 
     componentDidMount(){
-      if(this.props.stockAmount === 0){
-        this.props.startLoading()
-        getInitStockInfo()
-        .then(option => {
-          this.props.setState(option)
-          this.props.endLoading()
-        })
-      }
+      if(this.props.stockAmount === 0)this.props.getData()
     }
 }
 
@@ -50,9 +42,7 @@ const mapDispatchToProps = dispatch => {
   return {
       buyStock: ()=> dispatch(buyStock()),
       sellStock: ()=> dispatch(sellStock()),
-      startLoading :()=> dispatch(startLoading()),
-      endLoading :()=> dispatch(endLoading()),
-      setState :(option)=> dispatch(setState(option)),
+      getData: ()=> dispatch(fetchDataFromAPI())
   }
 }
 

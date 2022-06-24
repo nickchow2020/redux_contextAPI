@@ -10,6 +10,9 @@ import {SELL_STOCK} from "./actionType"
 import { SET_STATE } from "./actionType"
 
 
+import {getInitStockInfo} from "../apis/my_stock.api"
+
+
 export const increment = ()=> {
   return {type:HANDLE_ADD}
 }
@@ -40,4 +43,13 @@ export const endLoading = ()=>{
 
 export const setState = (payload)=>{
   return {type: SET_STATE, payload}
+}
+
+export function fetchDataFromAPI() {
+  return async function thunk(dispatch) {
+    dispatch(startLoading())
+    let data = await getInitStockInfo()
+    dispatch(setState(data))
+    dispatch(endLoading())
+  };
 }
